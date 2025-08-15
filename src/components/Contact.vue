@@ -194,7 +194,7 @@ const submitForm = () => {
 }
 
 .submit-btn {
-    background-color: #42b983;
+    background-color: #3498DB;
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -207,7 +207,7 @@ const submitForm = () => {
 }
 
 .submit-btn:hover {
-    background-color: #369b6e;
+    background-color: #74c0f3;
 }
 
 .submit-btn:disabled {
@@ -252,7 +252,7 @@ const submitForm = () => {
 
 .icon {
     margin-right: 1rem;
-    color: #42b983;
+    color: #3498DB;
     font-size: 1.2rem;
     width: 20px;
     text-align: center;
