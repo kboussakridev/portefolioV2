@@ -21,30 +21,36 @@ const submitForm = () => {
     isLoading.value = true;
     error.value = '';
 
-
-    // Appel vers ton script PHP qui envoie le mail
-    fetch('/send_mail.php', {
+    // Envoi via Formspree (remplacez YOUR_FORM_ID par votre vrai ID)
+    fetch('https://formspree.io/f/mpwlezwa', {
         method: 'POST',
-        body: new FormData(
-            Object.entries(form.value).reduce((fd, [k, v]) => {
-                fd.append(k, v);
-                return fd;
-            }, new FormData())
-        )
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            name: form.value.name,
+            email: form.value.email,
+            message: form.value.message,
+            _language: 'fr' // Optionnel : désactive les messages en anglais
+        }).toString()
     })
-        .then(res => res.json())
+        .then(response => {
+            if (!response.ok) throw new Error('Erreur réseau');
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
                 isSuccess.value = true;
                 form.value = { name: '', email: '', message: '' };
-                // Message de succès disparaît après 5s
                 setTimeout(() => isSuccess.value = false, 5000);
             } else {
-                error.value = 'Erreur lors de l’envoi du message.';
+                error.value = "Erreur lors de l'envoi";
             }
         })
-        .catch(() => {
-            error.value = 'Impossible de contacter le serveur.';
+        .catch(err => {
+            error.value = 'Erreur : ' + (err.message || 'Problème de connexion');
+            console.error("Erreur d'envoi:", err);
         })
         .finally(() => {
             isLoading.value = false;
@@ -69,10 +75,11 @@ const submitForm = () => {
         <p class="section-subtitle">Disponible pour des opportunités de collaboration</p>
 
         <div class="contact-container">
-            <form @submit.prevent="submitForm" class="contact-form">
+            <form @submit.prevent="submitForm" class="contact-form" action="https://formspree.io/f/mpwlezwa"
+                method="POST" required>
                 <div class="form-group">
                     <label for="name">Nom</label>
-                    <input type="text" id="name" v-model="form.name" placeholder="Votre nom">
+                    <input type="text" id="name" v-model="form.name" placeholder="Votre nom" name="email" required>
                 </div>
 
                 <div class="form-group">
@@ -82,7 +89,8 @@ const submitForm = () => {
 
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" v-model="form.message" rows="5" placeholder="Votre message..."></textarea>
+                    <textarea id="message" v-model="form.message" rows="5" placeholder="Votre message..." name="message"
+                        required></textarea>
                 </div>
 
                 <div v-if="error" class="error-message">{{ error }}</div>
