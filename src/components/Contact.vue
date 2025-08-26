@@ -37,12 +37,22 @@ const submitForm = async () => {
             }).toString()
         });
 
-        if (response.ok) {
+        // Formspree peut renvoyer différents codes de statut
+        if (response.status === 200 || response.status === 302) {
             isSuccess.value = true;
             form.value = { name: '', email: '', message: '' };
             setTimeout(() => isSuccess.value = false, 5000);
         } else {
-            throw new Error('Erreur serveur');
+            // Vérifier si c'est vraiment une erreur
+            const responseText = await response.text();
+            if (responseText.includes('success') || responseText.includes('redirect')) {
+                // C'est un succès malgré le code de statut
+                isSuccess.value = true;
+                form.value = { name: '', email: '', message: '' };
+                setTimeout(() => isSuccess.value = false, 5000);
+            } else {
+                throw new Error('Erreur serveur');
+            }
         }
     } catch (err) {
         error.value = 'Erreur de connexion. Réessayez dans quelques instants.';
