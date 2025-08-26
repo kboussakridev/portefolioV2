@@ -1,9 +1,5 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
-import arundoLogo from '@/assets/images/logos/arundo.jpg'
-import easyPrestaLogo from '@/assets/images/logos/easy-presta.jpg'
-import ngeLogo from '@/assets/images/logos/nge.png'
-import passLogo from '@/assets/images/logos/pass.jpg'
 
 const activeBloc = ref(0);
 const experiences = ref([
@@ -17,7 +13,7 @@ const experiences = ref([
             "Structuration des données avec YAML, JSON Schema et automatisation avec Python/Pandas",
             "Utilisation de GitLab pour la gestion de projet et collaboration en équipe"
         ],
-        logo: arundoLogo
+        logo: "arundo.jpg"
     },
     {
         id: 1,
@@ -29,7 +25,7 @@ const experiences = ref([
             "Intégration de contenus optimisés pour le SEO et configuration des plugins essentiels",
             "Formation du client à la prise en main du site et à sa gestion autonome"
         ],
-        logo: easyPrestaLogo
+        logo: "easy-presta.jpg"
     },
     {
         id: 2,
@@ -41,7 +37,7 @@ const experiences = ref([
             "Encadrement et coordination des équipes terrain et des sous-traitants",
             "Suivi de l'avancement des travaux, respect des délais, du budget et des normes de sécurité"
         ],
-        logo: ngeLogo
+        logo: "nge.png"
     },
     {
         id: 3,
@@ -53,7 +49,7 @@ const experiences = ref([
             "Réalisation de voiries en béton désactivé",
             "Organisation logistique des équipes, du matériel et suivi qualité des finitions"
         ],
-        logo: passLogo
+        logo: "pass.jpg"
     }
 ]);
 
@@ -75,13 +71,9 @@ watchEffect((onCleanup) => {
 });
 
 function getImgUrl(imgPath) {
-    try {
-        // Utilisez le chemin relatif correct (adapté à la prod)
-        return new URL(`../assets/images/logos/${imgPath}`, import.meta.url).href;
-    } catch (error) {
-        console.error("Erreur de chargement de l'image:", imgPath, error);
-        return ''; // Ou une image de fallback
-    }
+    // Utilisez des chemins absolus depuis le dossier public
+    // Cela fonctionne mieux avec le déploiement sur GitHub Pages
+    return `/portefolioV2/assets/images/logos/${imgPath}`;
 }
 </script>
 
@@ -98,7 +90,7 @@ function getImgUrl(imgPath) {
                         :class="['company-card', { 'active': activeBloc === exp.id }]" @click="showXp(exp.id)"
                         @mouseenter="activeBloc = exp.id">
                         <div class="company-logo">
-                            <img :src="exp.logo" :alt="exp.company">
+                            <img :src="getImgUrl(exp.logo)" :alt="exp.company">
                         </div>
                         <div class="company-info">
                             <h3>{{ exp.company }}</h3>
