@@ -12,7 +12,7 @@ const isLoading = ref(false);
 const isSuccess = ref(false);
 const error = ref('');
 
-const submitForm = () => {
+const submitForm = async () => {
     if (!form.value.name || !form.value.email || !form.value.message) {
         error.value = 'Veuillez remplir tous les champs';
         return;
@@ -21,40 +21,35 @@ const submitForm = () => {
     isLoading.value = true;
     error.value = '';
 
-    // Envoi via Formspree (remplacez YOUR_FORM_ID par votre vrai ID)
-    fetch('https://formspree.io/f/mpwlezwa', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-            name: form.value.name,
-            email: form.value.email,
-            message: form.value.message,
-            _language: 'fr' // Optionnel : désactive les messages en anglais
-        }).toString()
-    })
-    .then(response => {
-        if (!response.ok) throw new Error('Erreur réseau');
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
+    try {
+        // Feedback immédiat pour l'utilisateur
+        const response = await fetch('https://formspree.io/f/mpwlezwa', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                name: form.value.name,
+                email: form.value.email,
+                message: form.value.message,
+                _language: 'fr'
+            }).toString()
+        });
+
+        if (response.ok) {
             isSuccess.value = true;
             form.value = { name: '', email: '', message: '' };
             setTimeout(() => isSuccess.value = false, 5000);
         } else {
-            error.value = "Erreur lors de l'envoi";
+            throw new Error('Erreur serveur');
         }
-    })
-    .catch(err => {
-        error.value = 'Erreur : ' + (err.message || 'Problème de connexion');
+    } catch (err) {
+        error.value = 'Erreur de connexion. Réessayez dans quelques instants.';
         console.error("Erreur d'envoi:", err);
-    })
-    .finally(() => {
+    } finally {
         isLoading.value = false;
-    });
+    }
 };
 </script>
 
@@ -80,13 +75,20 @@ const submitForm = () => {
                     <textarea id="message" v-model="form.message" rows="5" placeholder="Votre message..." required></textarea>
                 </div>
 
-                <div v-if="error" class="error-message">{{ error }}</div>
+                <!-- Messages d'état améliorés -->
+                <div v-if="error" class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i> {{ error }}
+                </div>
+                
                 <div v-if="isSuccess" class="success-message">
-                    Message envoyé avec succès ! Je vous répondrai dès que possible.
+                    <i class="fas fa-check-circle"></i> Message envoyé avec succès ! Je vous répondrai dès que possible.
                 </div>
 
+                <!-- Bouton avec états visuels clairs -->
                 <button type="submit" class="submit-btn" :disabled="isLoading">
-                    <span v-if="!isLoading">Envoyer</span>
+                    <span v-if="!isLoading">
+                        <i class="fas fa-paper-plane"></i> Envoyer
+                    </span>
                     <span v-else class="loading">
                         <i class="fas fa-spinner fa-spin"></i> Envoi en cours...
                     </span>
