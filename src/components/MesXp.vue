@@ -75,8 +75,7 @@ function getImgUrl(imgPath) {
     if (import.meta.env.DEV) {
         return `/src/assets/images/logos/${imgPath}`;
     }
-    // En production, utilisez les chemins absolus depuis le dossier public
-    // Le base path est /portefolioV2/ selon votre configuration Vite
+    // En production avec GitHub Pages, utilisez le base path /portefolioV2/
     return `/portefolioV2/assets/images/logos/${imgPath}`;
 }
 </script>

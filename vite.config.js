@@ -9,6 +9,7 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  // Remettre le base path pour que le routage fonctionne
   base: process.env.NODE_ENV === "production" ? "/portefolioV2/" : "/",
   build: {
     outDir: "dist",
