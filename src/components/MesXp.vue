@@ -76,6 +76,7 @@ function getImgUrl(imgPath) {
         return `/src/assets/images/logos/${imgPath}`;
     }
     // En production, utilisez les chemins absolus depuis le dossier public
+    // Le base path est /portefolioV2/ selon votre configuration Vite
     return `/portefolioV2/assets/images/logos/${imgPath}`;
 }
 </script>
