@@ -35,37 +35,26 @@ const submitForm = () => {
             _language: 'fr' // Optionnel : désactive les messages en anglais
         }).toString()
     })
-        .then(response => {
-            if (!response.ok) throw new Error('Erreur réseau');
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                isSuccess.value = true;
-                form.value = { name: '', email: '', message: '' };
-                setTimeout(() => isSuccess.value = false, 5000);
-            } else {
-                error.value = "Erreur lors de l'envoi";
-            }
-        })
-        .catch(err => {
-            error.value = 'Erreur : ' + (err.message || 'Problème de connexion');
-            console.error("Erreur d'envoi:", err);
-        })
-        .finally(() => {
-            isLoading.value = false;
-        });
-
-    // // Simulation d'envoi (remplacez par votre vrai traitement)
-    // setTimeout(() => {
-    //     console.log('Formulaire soumis:', form.value);
-    //     isLoading.value = false;
-    //     isSuccess.value = true;
-    //     form.value = { name: '', email: '', message: '' };
-
-    //     // Réinitialiser le message de succès après 5s
-    //     setTimeout(() => isSuccess.value = false, 5000);
-    // }, 1500);
+    .then(response => {
+        if (!response.ok) throw new Error('Erreur réseau');
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            isSuccess.value = true;
+            form.value = { name: '', email: '', message: '' };
+            setTimeout(() => isSuccess.value = false, 5000);
+        } else {
+            error.value = "Erreur lors de l'envoi";
+        }
+    })
+    .catch(err => {
+        error.value = 'Erreur : ' + (err.message || 'Problème de connexion');
+        console.error("Erreur d'envoi:", err);
+    })
+    .finally(() => {
+        isLoading.value = false;
+    });
 };
 </script>
 
@@ -75,22 +64,20 @@ const submitForm = () => {
         <p class="section-subtitle">Disponible pour des opportunités de collaboration</p>
 
         <div class="contact-container">
-            <form @submit.prevent="submitForm" class="contact-form" action="https://formspree.io/f/mpwlezwa"
-                method="POST" required>
+            <form @submit.prevent="submitForm" class="contact-form">
                 <div class="form-group">
                     <label for="name">Nom</label>
-                    <input type="text" id="name" v-model="form.name" placeholder="Votre nom" name="email" required>
+                    <input type="text" id="name" v-model="form.name" placeholder="Votre nom" required>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" v-model="form.email" placeholder="Votre email">
+                    <input type="email" id="email" v-model="form.email" placeholder="Votre email" required>
                 </div>
 
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" v-model="form.message" rows="5" placeholder="Votre message..." name="message"
-                        required></textarea>
+                    <textarea id="message" v-model="form.message" rows="5" placeholder="Votre message..." required></textarea>
                 </div>
 
                 <div v-if="error" class="error-message">{{ error }}</div>
