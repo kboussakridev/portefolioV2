@@ -71,8 +71,11 @@ watchEffect((onCleanup) => {
 });
 
 function getImgUrl(imgPath) {
-    // Utilisez des chemins absolus depuis le dossier public
-    // Cela fonctionne mieux avec le déploiement sur GitHub Pages
+    // En développement, utilisez les chemins relatifs
+    if (import.meta.env.DEV) {
+        return `/src/assets/images/logos/${imgPath}`;
+    }
+    // En production, utilisez les chemins absolus depuis le dossier public
     return `/portefolioV2/assets/images/logos/${imgPath}`;
 }
 </script>
