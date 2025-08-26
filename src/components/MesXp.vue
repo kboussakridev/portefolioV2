@@ -17,7 +17,7 @@ const experiences = ref([
             "Structuration des données avec YAML, JSON Schema et automatisation avec Python/Pandas",
             "Utilisation de GitLab pour la gestion de projet et collaboration en équipe"
         ],
-        logo: "arundoLogo"
+        logo: arundoLogo
     },
     {
         id: 1,
@@ -29,7 +29,7 @@ const experiences = ref([
             "Intégration de contenus optimisés pour le SEO et configuration des plugins essentiels",
             "Formation du client à la prise en main du site et à sa gestion autonome"
         ],
-        logo: "easyPrestaLogo"
+        logo: easyPrestaLogo
     },
     {
         id: 2,
@@ -41,7 +41,7 @@ const experiences = ref([
             "Encadrement et coordination des équipes terrain et des sous-traitants",
             "Suivi de l'avancement des travaux, respect des délais, du budget et des normes de sécurité"
         ],
-        logo: "ngeLogo"
+        logo: ngeLogo
     },
     {
         id: 3,
@@ -53,7 +53,7 @@ const experiences = ref([
             "Réalisation de voiries en béton désactivé",
             "Organisation logistique des équipes, du matériel et suivi qualité des finitions"
         ],
-        logo: "passLogo"
+        logo: passLogo
     }
 ]);
 
