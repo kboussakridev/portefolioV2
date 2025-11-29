@@ -13,16 +13,36 @@ const toggleMenu = () => {
 };
 
 // Fonction pour télécharger le CV
-const downloadCV = () => {
-    const link = document.createElement('a');
-    link.href = '/cv/KB_CV_ENI.pdf';
-    link.download = 'KB_CV_ENI.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    // Fermer le menu mobile si ouvert
-    if (isMenuOpen.value) {
-        toggleMenu();
+const downloadCV = async () => {
+    try {
+        // Récupérer le fichier via fetch
+        const response = await fetch('/cv/KB_CV_ENI.pdf');
+        if (!response.ok) {
+            throw new Error('Fichier non trouvé');
+        }
+
+        // Convertir la réponse en blob
+        const blob = await response.blob();
+
+        // Créer un lien temporaire pour télécharger le CV
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'KB_CV_ENI.pdf';
+        document.body.appendChild(link);
+        link.click();
+
+        // Nettoyer
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+        // Fermer le menu mobile si ouvert
+        if (isMenuOpen.value) {
+            toggleMenu();
+        }
+    } catch (error) {
+        console.error('Erreur lors du téléchargement du CV:', error);
+        alert('Erreur lors du téléchargement du CV. Veuillez réessayer.');
     }
 };
 </script>
