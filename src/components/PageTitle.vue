@@ -1,5 +1,14 @@
 <script setup>
-// Vous pouvez ajouter des imports ou variables ici si nécessaire
+// Fonction pour télécharger le CV
+const downloadCV = () => {
+    // Créer un lien temporaire pour télécharger le CV
+    const link = document.createElement('a');
+    link.href = '/cv/KB_CV_ENI.pdf';
+    link.download = 'KB_CV_ENI.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
 </script>
 
 <template>
@@ -20,6 +29,12 @@
                                     class="fa-brands fa-github icon github"></i></a></li>
                         <!-- <li class="item"><a href="#" target="_blank"><i class="fa-brands fa-discord icon"></i></a></li> -->
                     </ul>
+                </div>
+                <div id="cv-download">
+                    <button @click="downloadCV" class="cv-button">
+                        <i class="fas fa-download"></i>
+                        Télécharger mon CV
+                    </button>
                 </div>
             </div>
         </div>
@@ -82,6 +97,41 @@
 
 #social {
     margin-top: 2rem;
+}
+
+#cv-download {
+    margin-top: 2rem;
+}
+
+.cv-button {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    text-decoration: none;
+}
+
+.cv-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+}
+
+.cv-button:active {
+    transform: translateY(-1px);
+}
+
+.cv-button i {
+    font-size: 1rem;
 }
 
 #social ul {

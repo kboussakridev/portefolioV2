@@ -25,7 +25,11 @@ const learningTechs = ref(['React', 'Node.js', 'TypeScript'])
     <section id="skills">
         <div class="skills-container">
             <h2 class="section-title">Mes <span class="highlight">compétences</span></h2>
-            <p class="section-subtitle">Technologies que j'utilise</p>
+            <p class="section-subtitle">
+    Elles sont en constante évolution, car ce métier m’offre l’opportunité d’apprendre chaque jour. 
+    Curieux, impliqué et passionné, j’aime explorer de nouvelles technologies et les mettre en pratique 
+    pour créer des projets concrets et utiles.
+</p>
 
             <div class="skills-grid">
                 <div v-for="(tech, index) in technologies" :key="index" class="skill-card"

@@ -4,6 +4,9 @@ import { ref } from 'vue';
 
 const form = ref({
     name: '',
+    firstname: '',
+    phone: '',
+    subject: '',
     email: '',
     message: ''
 });
@@ -31,6 +34,9 @@ const submitForm = async () => {
             },
             body: new URLSearchParams({
                 name: form.value.name,
+                firstname: form.value.firstname,
+                phone: form.value.phone,
+                subject: form.value.subject,
                 email: form.value.email,
                 message: form.value.message,
                 _language: 'fr'
@@ -40,7 +46,7 @@ const submitForm = async () => {
         // Formspree peut renvoyer différents codes de statut
         if (response.status === 200 || response.status === 302) {
             isSuccess.value = true;
-            form.value = { name: '', email: '', message: '' };
+            form.value = { name: '', firstname: '', phone: '', subject: '', email: '', message: '' };
             setTimeout(() => isSuccess.value = false, 5000);
         } else {
             // Vérifier si c'est vraiment une erreur
@@ -48,7 +54,7 @@ const submitForm = async () => {
             if (responseText.includes('success') || responseText.includes('redirect')) {
                 // C'est un succès malgré le code de statut
                 isSuccess.value = true;
-                form.value = { name: '', email: '', message: '' };
+                form.value = { name: '', firstname: '', phone: '', subject: '', email: '', message: '' };
                 setTimeout(() => isSuccess.value = false, 5000);
             } else {
                 throw new Error('Erreur serveur');
@@ -71,17 +77,32 @@ const submitForm = async () => {
         <div class="contact-container">
             <form @submit.prevent="submitForm" class="contact-form">
                 <div class="form-group">
-                    <label for="name">Nom</label>
+                    <label for="name">Nom *</label>
                     <input type="text" id="name" v-model="form.name" placeholder="Votre nom" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="firstname">Prénom</label>
+                    <input type="text" id="firstname" v-model="form.firstname" placeholder="Votre prénom">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
                     <input type="email" id="email" v-model="form.email" placeholder="Votre email" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="message">Message</label>
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" v-model="form.phone" placeholder="Votre téléphone">
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Objet *</label>
+                    <input type="text" id="subject" v-model="form.subject" placeholder="Votre sujet" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
                     <textarea id="message" v-model="form.message" rows="5" placeholder="Votre message..." required></textarea>
                 </div>
 

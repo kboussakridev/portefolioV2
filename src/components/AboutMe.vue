@@ -8,22 +8,17 @@
             <div class="about-content">
                 <div class="text-content">
                     <p class="about-text">
-                        <span class="highlight-block">Développeur web full-stack</span> et ancien <span
-                            class="highlight-block">chef de chantier</span> spécialisé dans les <span
-                            class="highlight-block">travaux publics</span>.
-                        Grâce à une solide <span class="highlight-block">expérience de 15 ans</span> en gestion
-                        d'équipes
-                        et en optimisation de projets, j'ai entrepris une
-                        reconversion réussie dans le développement web.
-                    </p>
+    Bonjour ! Je m’appelle Karim Boussakri, <span class="highlight-block">développeur web full-stack</span>. 
+    Avant cela, j’ai travaillé pendant plus de <span class="highlight-block">15 ans</span> comme <span class="highlight-block">chef de chantier</span> dans les <span class="highlight-block">travaux publics</span>, 
+    une expérience qui m’a appris la rigueur, la gestion d’équipes et l’optimisation de projets.
+</p>
 
-                    <p class="about-text">
-                        Aujourd'hui, je combine <span class="highlight-underline">rigueur</span>, <span
-                            class="highlight-underline">polyvalence</span> et <span
-                            class="highlight-underline">créativité</span> pour concevoir des solutions numériques
-                        efficaces
-                        et adaptées aux besoins.
-                    </p>
+<p class="about-text">
+    Attiré depuis longtemps par le numérique, j’ai choisi de me reconvertir dans le développement web. 
+    Aujourd’hui, je mets à profit ma <span class="highlight-underline">polyvalence</span>, ma <span class="highlight-underline">créativité</span> et mon sens de l’<span class="highlight-underline">organisation</span> 
+    pour concevoir des solutions modernes, efficaces et adaptées aux besoins des utilisateurs.
+</p>
+
 
                     <div class="expertise-box">
                         <p class="expertise-title">Domaines d'expertise :</p>

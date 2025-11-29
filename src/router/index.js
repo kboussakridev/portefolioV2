@@ -37,6 +37,37 @@ const routes = [
     component: () => import("@/components/Contact.vue"),
     meta: { title: "Mes Me contacter" },
   },
+  // Routes éducatives v-bind (commentées car les fichiers n'existent pas encore)
+  // {
+  //   path: "/vbind-fundamentals",
+  //   name: "VBindFundamentals",
+  //   component: () => import("@/views/VBindFundamentals.vue"),
+  //   meta: { title: "Fondamentaux v-bind" },
+  // },
+  // {
+  //   path: "/class-style-binding",
+  //   name: "ClassStyleBinding",
+  //   component: () => import("@/views/ClassAndStyleBinding.vue"),
+  //   meta: { title: "Classes et Styles" },
+  // },
+  // {
+  //   path: "/props-binding",
+  //   name: "PropsBinding",
+  //   component: () => import("@/views/PropsBinding.vue"),
+  //   meta: { title: "Props et v-bind" },
+  // },
+  // {
+  //   path: "/advanced-binding",
+  //   name: "AdvancedBinding",
+  //   component: () => import("@/views/AdvancedBinding.vue"),
+  //   meta: { title: "v-bind Avancé" },
+  // },
+  // {
+  //   path: "/practice-exercises",
+  //   name: "PracticeExercises",
+  //   component: () => import("@/views/PracticeExercises.vue"),
+  //   meta: { title: "Exercices Pratiques" },
+  // },
 ];
 
 const router = createRouter({

@@ -3,9 +3,27 @@ import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const isMenuOpen = ref(false);
+const isDarkMode = ref(false);
+const toggleDarkMode = () => {
+    isDarkMode.value = !isDarkMode.value;
+};
 
 const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value;
+};
+
+// Fonction pour télécharger le CV
+const downloadCV = () => {
+    const link = document.createElement('a');
+    link.href = '/cv/KB_CV_ENI.pdf';
+    link.download = 'KB_CV_ENI.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    // Fermer le menu mobile si ouvert
+    if (isMenuOpen.value) {
+        toggleMenu();
+    }
 };
 </script>
 
@@ -21,7 +39,11 @@ const toggleMenu = () => {
             <RouterLink to="/technologies">Technos</RouterLink>
             <RouterLink to="/experiences">Expériences</RouterLink>
             <RouterLink to="/contact">Contact</RouterLink>
-
+            <button class="cv-download-btn" @click="downloadCV" title="Télécharger mon CV">
+                <i class="fas fa-download"></i>
+                CV
+            </button>
+            <button class="dark-mode-toggle" @click="toggleDarkMode"><i class="fas fa-moon-o"></i></button>
         </div>
 
         <!-- Menu Mobile -->
@@ -36,7 +58,10 @@ const toggleMenu = () => {
             <RouterLink to="/technologies" @click="toggleMenu">Technologies</RouterLink>
             <RouterLink to="/experiences" @click="toggleMenu">Expériences</RouterLink>
             <RouterLink to="/contact" @click="toggleMenu">Contact</RouterLink>
-
+            <button class="cv-download-btn-mobile" @click="downloadCV">
+                <i class="fas fa-download"></i>
+                Télécharger mon CV
+            </button>
         </div>
     </nav>
 </template>
@@ -156,6 +181,75 @@ const toggleMenu = () => {
     .nav-logo {
         font-size: 1.2rem;
     }
+}
+
+/* Bouton télécharger CV */
+.cv-download-btn {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+    white-space: nowrap;
+}
+
+.cv-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+}
+
+.cv-download-btn i {
+    font-size: 0.9rem;
+}
+
+.dark-mode-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(15deg);
+}
+
+.cv-download-btn-mobile {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.cv-download-btn-mobile:hover {
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+    transform: translateX(5px);
 }
 
 /* Pour les très petits écrans */
