@@ -3,11 +3,6 @@ import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const isMenuOpen = ref(false);
-const isDarkMode = ref(false);
-const toggleDarkMode = () => {
-    isDarkMode.value = !isDarkMode.value;
-};
-
 const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value;
 };
@@ -63,7 +58,6 @@ const downloadCV = async () => {
                 <i class="fas fa-download"></i>
                 CV
             </button>
-            <button class="dark-mode-toggle" @click="toggleDarkMode"><i class="fas fa-moon-o"></i></button>
         </div>
 
         <!-- Menu Mobile -->
@@ -228,26 +222,6 @@ const downloadCV = async () => {
 
 .cv-download-btn i {
     font-size: 0.9rem;
-}
-
-.dark-mode-toggle {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: none;
-    padding: 0.5rem;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.dark-mode-toggle:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: rotate(15deg);
 }
 
 .cv-download-btn-mobile {
