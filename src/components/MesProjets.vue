@@ -17,12 +17,12 @@ const projects = ref([
             "VE-mon profil2.png",
 
         ],
-        tags: ["HTML", "Tailwind", "Java", "Spring Boot"],
+        tags: ["HTML", "Tailwind", "Java", "Eclipse"],
         description: "Plateforme de vente aux enchères et paiement sécurisé.",
         tasks: [
             "Conception de l'interface utilisateur responsive",
             "Implémentation du système d'enchères en temps réel",
-            "Intégration du module de paiement sécurisé"
+            "Système de Base de donées ",
         ],
         link: "#"
     },
@@ -59,12 +59,17 @@ const projects = ref([
             "ECO-produit2.png",
             "ECO-stripe.png",
             "ECO-achat validé.png",
-        ], tags: ["Vue.js", "PHP", "HTML", "CSS"],
+        ], tags: ["Symfony", "PHP", "Twig", "Html/CSS", "MySQL", "Bootstrap"],
         description: "Site e-commerce spécialisé dans les vêtements traditionnels marocains avec catalogue complet et paiement sécurisé avec API Stripe.",
         tasks: [
             "Développement du front-end avec Twig",
+            "Sécurisation des données utilisateur",
             "Intégration du système de gestion de stock",
-            "Optimisation pour le référencement naturel"
+            "Dashboard de gestion de l'e-commerce",
+            "Optimisation pour le référencement naturel",
+            "Système de Base de donées ",
+            "Système de paiement sécurisé avec API Stripe",
+
         ],
         link: "#"
     },

@@ -8,16 +8,27 @@
             <div class="about-content">
                 <div class="text-content">
                     <p class="about-text">
-    Bonjour ! Je m’appelle Karim Boussakri, <span class="highlight-block">développeur web full-stack</span>. 
-    Avant cela, j’ai travaillé pendant plus de <span class="highlight-block">15 ans</span> comme <span class="highlight-block">chef de chantier</span> dans les <span class="highlight-block">travaux publics</span>, 
-    une expérience qui m’a appris la rigueur, la gestion d’équipes et l’optimisation de projets.
-</p>
+                        Bonjour ! Je m’appelle Karim Boussakri, <span class="highlight-block">développeur web
+                            full-stack</span>.
+                        Avant cela, j’ai travaillé pendant plus de <span class="highlight-block">15 ans</span> comme
+                        <span class="highlight-block">chef de chantier</span> dans les <span
+                            class="highlight-block">travaux publics</span>,
+                        une expérience qui m’a appris la rigueur, la gestion d’équipes et l’optimisation de projets.
+                    </p>
 
-<p class="about-text">
-    Attiré depuis longtemps par le numérique, j’ai choisi de me reconvertir dans le développement web. 
-    Aujourd’hui, je mets à profit ma <span class="highlight-underline">polyvalence</span>, ma <span class="highlight-underline">créativité</span> et mon sens de l’<span class="highlight-underline">organisation</span> 
-    pour concevoir des solutions modernes, efficaces et adaptées aux besoins des utilisateurs.
-</p>
+                    <p class="about-text">
+
+                        Attiré par le monde du numérique depuis longtemps, j’ai choisi de me reconvertir dans le
+                        développement web.
+                        <br>
+                        Cette passion, alliée à ma soif constante d’apprendre, me pousse chaque jour à explorer de
+                        nouvelles technologies et à relever des défis techniques avec enthousiasme.
+                        <br>
+                        Aujourd’hui, je mets à profit ma <span class="highlight-underline">polyvalence</span>, ma <span
+                            class="highlight-underline">créativité</span> et mon sens de l’<span
+                            class="highlight-underline">organisation</span>
+                        pour concevoir des solutions modernes, efficaces et adaptées aux besoins des utilisateurs.
+                    </p>
 
 
                     <div class="expertise-box">

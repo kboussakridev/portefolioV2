@@ -1,43 +1,155 @@
 <script setup>
+
+import { ref, onMounted, computed } from 'vue'
+
+const name = ref('Développeur Web')
+const stack = ['Full-stack', 'Symfony', 'Vue.js', 'Python']
+const currentIndex = ref(0)
+const displayedText = ref('')
+const isDeleting = ref(false)
+const charIndex = ref(0)
+const speed = 150
+const pauseTime = 1500
+
+onMounted(() => {
+    const type = () => {
+        const currentStack = stack[currentIndex.value]
+
+        if (isDeleting.value) {
+            displayedText.value = currentStack.substring(0, charIndex.value - 1)
+            charIndex.value--
+        } else {
+            displayedText.value = currentStack.substring(0, charIndex.value + 1)
+            charIndex.value++
+        }
+
+        if (!isDeleting.value && charIndex.value === currentStack.length) {
+            setTimeout(() => {
+                isDeleting.value = true
+            }, pauseTime)
+        } else if (isDeleting.value && charIndex.value === 0) {
+            isDeleting.value = false
+            currentIndex.value = (currentIndex.value + 1) % stack.length
+        }
+
+        setTimeout(type, isDeleting.value ? 100 : speed)
+    }
+
+    type()
+})
+
+// Fonction pour télécharger le CV
+// États réactifs
+const isDownloading = ref(false)
+const downloadError = ref(null)
+const isMenuOpen = ref(false)
+
+// Fonction pour basculer le menu
+const toggleMenu = () => {
+    isMenuOpen.value = !isMenuOpen.value
+}
+
 // Fonction pour télécharger le CV
 const downloadCV = async () => {
+    // Réinitialiser l'erreur
+    downloadError.value = null
+    isDownloading.value = true
+
     try {
         // Récupérer le fichier via fetch
-        const response = await fetch('/cv/KB_CV_ENI.pdf');
+        const response = await fetch('/cv/KB_CV_ENI.pdf')
         if (!response.ok) {
-            throw new Error('Fichier non trouvé');
+            throw new Error(`Fichier non trouvé (${response.status})`)
+        }
+
+        // Vérifier le type de contenu
+        const contentType = response.headers.get('content-type')
+        if (!contentType.includes('pdf')) {
+            throw new Error('Le fichier n\'est pas un PDF valide')
         }
 
         // Convertir la réponse en blob
-        const blob = await response.blob();
+        const blob = await response.blob()
+
+        // Vérifier la taille
+        if (blob.size === 0) {
+            throw new Error('Le fichier est vide')
+        }
 
         // Créer un lien temporaire pour télécharger le CV
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'KB_CV_ENI.pdf';
-        document.body.appendChild(link);
-        link.click();
+        const url = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        link.download = 'KB_CV_ENI.pdf'
+        link.style.display = 'none'
+        document.body.appendChild(link)
+        link.click()
 
         // Nettoyer
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
+
+        // Fermer le menu mobile si ouvert
+        if (isMenuOpen.value) {
+            toggleMenu()
+        }
+
+        // Succès - vous pourriez ajouter un tracking ici
+        console.log('CV téléchargé avec succès')
+
     } catch (error) {
-        console.error('Erreur lors du téléchargement du CV:', error);
-        alert('Erreur lors du téléchargement du CV. Veuillez réessayer.');
+        console.error('Erreur lors du téléchargement du CV:', error)
+        downloadError.value = error.message || 'Erreur lors du téléchargement du CV. Veuillez réessayer.'
+
+        // Afficher l'alerte seulement si pas déjà géré par l'interface
+        if (!downloadError.value) {
+            alert('Erreur lors du téléchargement du CV. Veuillez réessayer.')
+        }
+    } finally {
+        isDownloading.value = false
     }
-};
+}
+
+// Version réactive des informations du fichier (optionnel)
+const fileInfo = ref(null)
+
+// Récupérer les infos du fichier au chargement (optionnel)
+const fetchFileInfo = async () => {
+    try {
+        const response = await fetch('/cv/KB_CV_ENI.pdf', { method: 'HEAD' })
+        const size = response.headers.get('content-length')
+        const lastModified = response.headers.get('last-modified')
+
+        fileInfo.value = {
+            size: size ? `${(size / 1024 / 1024).toFixed(2)} MB` : 'Taille inconnue',
+            lastModified: lastModified ? new Date(lastModified).toLocaleDateString('fr-FR') : 'Date inconnue'
+        }
+    } catch (error) {
+        console.warn('Impossible de récupérer les informations du fichier')
+    }
+}
+
+// Appeler fetchFileInfo si nécessaire
+// onMounted(() => {
+//   fetchFileInfo()
+// })
 </script>
 
 <template>
     <section id="top-line">
+        <div class="container">
+            <p v-if="downloadError" class="error-message">
+                {{ downloadError }}
+            </p>
+        </div>
         <div class="content-wrapper">
             <img id="profile-img" src="../assets/images/moi.jpg" alt="photo de profile">
             <div id="line">
                 <h1>
-                    <span class="text-highlignt-1">Développeur Web</span> Full-stack
+                    <span class="text-highlignt-1">{{ name }}</span> {{ displayedText }}
                 </h1>
-                <p class="subtitle">Créateur de solutions digitales sur mesure</p>
+                <p class="subtitle">Passionné par le développement et la création de projets fonctionnels, je suis
+                    motivé à apprendre et à relever de nouveaux défis chaque jour.</p>
                 <div id="social">
                     <ul>
                         <!-- <li class="item"><a href="#" target="_blank"><i class="fa-brands fa-facebook icon"></i></a></li> -->
@@ -216,10 +328,15 @@ const downloadCV = async () => {
 
     .subtitle {
         font-size: 1.2rem;
+        text-align: center;
     }
 
     #social ul {
         justify-content: center;
+    }
+
+    #cv-download {
+        text-align: center;
     }
 }
 
