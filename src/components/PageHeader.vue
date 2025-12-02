@@ -11,7 +11,7 @@ const toggleMenu = () => {
 const downloadCV = async () => {
     try {
         // Récupérer le fichier via fetch
-        const response = await fetch('/cv/KB_CV_ENI.pdf');
+        const response = await fetch('./cv/KB_CV_ENI.pdf');
         if (!response.ok) {
             throw new Error('Fichier non trouvé');
         }

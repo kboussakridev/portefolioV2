@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const name = ref('Développeur Web')
 const stack = ['Full-stack', 'Symfony', 'Vue.js', 'Python']
@@ -38,10 +38,6 @@ onMounted(() => {
     type()
 })
 
-// Fonction pour télécharger le CV
-// États réactifs
-const isDownloading = ref(false)
-const downloadError = ref(null)
 const isMenuOpen = ref(false)
 
 // Fonction pour basculer le menu
@@ -51,97 +47,41 @@ const toggleMenu = () => {
 
 // Fonction pour télécharger le CV
 const downloadCV = async () => {
-    // Réinitialiser l'erreur
-    downloadError.value = null
-    isDownloading.value = true
-
     try {
         // Récupérer le fichier via fetch
-        const response = await fetch('/cv/KB_CV_ENI.pdf')
+        const response = await fetch('./cv/KB_CV_ENI.pdf');
         if (!response.ok) {
-            throw new Error(`Fichier non trouvé (${response.status})`)
-        }
-
-        // Vérifier le type de contenu
-        const contentType = response.headers.get('content-type')
-        if (!contentType.includes('pdf')) {
-            throw new Error('Le fichier n\'est pas un PDF valide')
+            throw new Error('Fichier non trouvé');
         }
 
         // Convertir la réponse en blob
-        const blob = await response.blob()
-
-        // Vérifier la taille
-        if (blob.size === 0) {
-            throw new Error('Le fichier est vide')
-        }
+        const blob = await response.blob();
 
         // Créer un lien temporaire pour télécharger le CV
-        const url = window.URL.createObjectURL(blob)
-        const link = document.createElement('a')
-        link.href = url
-        link.download = 'KB_CV_ENI.pdf'
-        link.style.display = 'none'
-        document.body.appendChild(link)
-        link.click()
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'KB_CV_ENI.pdf';
+        document.body.appendChild(link);
+        link.click();
 
         // Nettoyer
-        document.body.removeChild(link)
-        window.URL.revokeObjectURL(url)
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
 
         // Fermer le menu mobile si ouvert
         if (isMenuOpen.value) {
-            toggleMenu()
-        }
-
-        // Succès - vous pourriez ajouter un tracking ici
-        console.log('CV téléchargé avec succès')
-
-    } catch (error) {
-        console.error('Erreur lors du téléchargement du CV:', error)
-        downloadError.value = error.message || 'Erreur lors du téléchargement du CV. Veuillez réessayer.'
-
-        // Afficher l'alerte seulement si pas déjà géré par l'interface
-        if (!downloadError.value) {
-            alert('Erreur lors du téléchargement du CV. Veuillez réessayer.')
-        }
-    } finally {
-        isDownloading.value = false
-    }
-}
-
-// Version réactive des informations du fichier (optionnel)
-const fileInfo = ref(null)
-
-// Récupérer les infos du fichier au chargement (optionnel)
-const fetchFileInfo = async () => {
-    try {
-        const response = await fetch('/cv/KB_CV_ENI.pdf', { method: 'HEAD' })
-        const size = response.headers.get('content-length')
-        const lastModified = response.headers.get('last-modified')
-
-        fileInfo.value = {
-            size: size ? `${(size / 1024 / 1024).toFixed(2)} MB` : 'Taille inconnue',
-            lastModified: lastModified ? new Date(lastModified).toLocaleDateString('fr-FR') : 'Date inconnue'
+            toggleMenu();
         }
     } catch (error) {
-        console.warn('Impossible de récupérer les informations du fichier')
+        console.error('Erreur lors du téléchargement du CV:', error);
+        alert('Erreur lors du téléchargement du CV. Veuillez réessayer.');
     }
-}
-
-// Appeler fetchFileInfo si nécessaire
-// onMounted(() => {
-//   fetchFileInfo()
-// })
+};
 </script>
 
 <template>
     <section id="top-line">
-        <div class="container">
-            <p v-if="downloadError" class="error-message">
-                {{ downloadError }}
-            </p>
-        </div>
         <div class="content-wrapper">
             <img id="profile-img" src="../assets/images/moi.jpg" alt="photo de profile">
             <div id="line">
