@@ -3,7 +3,7 @@
 import { ref, onMounted } from 'vue'
 
 const name = ref('Développeur Web')
-const stack = ['Full-stack', 'Symfony', 'Vue.js', 'Python']
+const stack = ['Full-stack', 'Symfony', 'Vue.js', 'Angular']
 const currentIndex = ref(0)
 const displayedText = ref('')
 const isDeleting = ref(false)
@@ -45,11 +45,14 @@ const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value
 }
 
+// URL du CV qui respecte le BASE_URL de Vite (utile pour GitHub Pages)
+const cvUrl = `${import.meta.env.BASE_URL}cv/KB_CV_ENI.pdf`;
+
 // Fonction pour télécharger le CV
 const downloadCV = async () => {
     try {
         // Récupérer le fichier via fetch
-        const response = await fetch('./cv/KB_CV_ENI.pdf');
+        const response = await fetch(cvUrl);
         if (!response.ok) {
             throw new Error('Fichier non trouvé');
         }

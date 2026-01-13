@@ -7,11 +7,14 @@ const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value;
 };
 
+// URL du CV qui respecte le BASE_URL de Vite (utile pour GitHub Pages)
+const cvUrl = `${import.meta.env.BASE_URL}cv/KB_CV_ENI.pdf`;
+
 // Fonction pour télécharger le CV
 const downloadCV = async () => {
     try {
         // Récupérer le fichier via fetch
-        const response = await fetch('./cv/KB_CV_ENI.pdf');
+        const response = await fetch(cvUrl);
         if (!response.ok) {
             throw new Error('Fichier non trouvé');
         }
