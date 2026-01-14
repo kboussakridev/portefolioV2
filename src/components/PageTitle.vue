@@ -46,7 +46,7 @@ const toggleMenu = () => {
 }
 
 // URL du CV qui respecte le BASE_URL de Vite (utile pour GitHub Pages)
-const cvUrl = `${import.meta.env.BASE_URL}cv/KB_CV_ENI.pdf`;
+const cvUrl = `${import.meta.env.BASE_URL}cv/KB_CV.pdf`;
 
 // Fonction pour télécharger le CV
 const downloadCV = async () => {
@@ -64,7 +64,7 @@ const downloadCV = async () => {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'KB_CV_ENI.pdf';
+        link.download = 'KB_CV.pdf';
         document.body.appendChild(link);
         link.click();
 
