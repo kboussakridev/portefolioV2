@@ -7,19 +7,18 @@ const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value;
 };
 
-// URL du CV qui respecte le BASE_URL de Vite (utile pour GitHub Pages)
+// URL du CV qui respecte le BASE_URL de Vite
 const cvUrl = `${import.meta.env.BASE_URL}cv/KB_CV.pdf`;
 
 // Fonction pour télécharger le CV
 const downloadCV = async () => {
     try {
-        // Récupérer le fichier via fetch
         const response = await fetch(cvUrl);
         if (!response.ok) {
             throw new Error('Fichier non trouvé');
         }
 
-        // Convertir la réponse en blob
+        // Convertir la réponse en blob, blob est un objet qui contient le fichier PDF
         const blob = await response.blob();
 
         // Créer un lien temporaire pour télécharger le CV
@@ -30,7 +29,7 @@ const downloadCV = async () => {
         document.body.appendChild(link);
         link.click();
 
-        // Nettoyer
+        // On supprime le lien temporaire
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
 
@@ -86,11 +85,13 @@ const downloadCV = async () => {
 <style scoped>
 .navbar {
     position: fixed;
-    top: 0;
     width: 100%;
-    background-color: #2c3e50;
-    padding: 1rem 0;
+    top: 0;
+    margin: 0;
+    padding: 2rem;
     display: flex;
+    box-sizing: border-box;
+    background-color: #2c3e50;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
@@ -101,17 +102,14 @@ const downloadCV = async () => {
     font-weight: bold;
     text-decoration: none;
     font-size: clamp(1.2rem, 3vw, 1.5rem);
-    /* Taille responsive */
     white-space: nowrap;
     margin-right: 1rem;
     overflow: hidden;
-    /* évite que ça dépasse */
 }
 
 .nav-links {
     display: flex;
     gap: clamp(0.5rem, 2vw, 1.5rem);
-    /* Espacement responsive */
     flex-wrap: wrap;
     justify-content: flex-end;
 }
@@ -122,9 +120,7 @@ const downloadCV = async () => {
     transition: color 0.3s;
     padding: 0.3rem 0;
     font-size: clamp(0.9rem, 2vw, 1rem);
-    /* Taille de police responsive */
     white-space: nowrap;
-    /* Empêche le retour à la ligne */
 }
 
 /* Menu Mobile */
@@ -181,7 +177,7 @@ const downloadCV = async () => {
     transform: translateY(0);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 825px) {
     .nav-links {
         display: none;
     }

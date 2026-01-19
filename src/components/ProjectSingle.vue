@@ -15,10 +15,10 @@ const props = defineProps({
 });
 
 // Carrousel logic
-const currentImageIndex = ref(0);
-const transitionEffect = ref('slide');
-const intervalId = ref(null);
-const isHovered = ref(false);
+const currentImageIndex = ref(0);// currentImageIndex est l'index de l'image courante
+const transitionEffect = ref('slide');// transitionEffect est l'effet de transition entre les images
+const intervalId = ref(null);// intervalId est l'intervalle de temps entre les images
+const isHovered = ref(false);// isHovered est l'état de la souris sur le carrousel
 
 const currentImage = computed(() => {
     return props.project.image[currentImageIndex.value] || '';
@@ -32,25 +32,26 @@ function getImgUrl(imgPath) {
         return '';
     }
 }
-
+// Fonction pour passer à l'image suivante
 function nextSlide() {
     if (props.project.image.length <= 1) return;
     currentImageIndex.value = (currentImageIndex.value + 1) % props.project.image.length;
     transitionEffect.value = 'slide';
 }
-
+// Fonction pour passer à l'image précédente
 function prevSlide() {
     if (props.project.image.length <= 1) return;
     currentImageIndex.value = (currentImageIndex.value - 1 + props.project.image.length) % props.project.image.length;
     transitionEffect.value = 'slide-reverse';
 }
-
+// Fonction pour passer à l'image d'index donné
 function goToSlide(index) {
     if (index === currentImageIndex.value || props.project.image.length <= 1) return;
     transitionEffect.value = index > currentImageIndex.value ? 'slide' : 'slide-reverse';
     currentImageIndex.value = index;
 }
 
+// Fonction pour démarrer le carrousel
 function startSlideshow() {
     clearInterval();
     if (props.project.image.length > 1) {
@@ -58,6 +59,7 @@ function startSlideshow() {
     }
 }
 
+// Fonction pour arrêter le carrousel
 function clearInterval() {
     if (intervalId.value) {
         window.clearInterval(intervalId.value);
@@ -65,10 +67,12 @@ function clearInterval() {
     }
 }
 
+// Fonction pour démarrer le carrousel au montage du composant
 onMounted(() => {
     startSlideshow();
 });
 
+// Fonction pour arrêter le carrousel au démontage du composant
 onUnmounted(() => {
     clearInterval();
 });

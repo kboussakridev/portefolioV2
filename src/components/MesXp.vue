@@ -57,7 +57,7 @@ const showXp = (id) => {
     activeBloc.value = id;
 };
 
-// Optionnel: Animation automatique du carrousel
+// Animation automatique du carrousel
 const autoRotate = () => {
     const interval = setInterval(() => {
         activeBloc.value = (activeBloc.value + 1) % experiences.value.length;
@@ -71,11 +71,9 @@ watchEffect((onCleanup) => {
 });
 
 function getImgUrl(imgPath) {
-    // En développement, utilisez les chemins relatifs
     if (import.meta.env.DEV) {
         return `/src/assets/images/logos/${imgPath}`;
     }
-    // En production avec GitHub Pages, utilisez le base path /portefolioV2/
     return `/portefolioV2/assets/images/logos/${imgPath}`;
 }
 </script>

@@ -57,7 +57,7 @@ const downloadCV = async () => {
             throw new Error('Fichier non trouvé');
         }
 
-        // Convertir la réponse en blob
+        // Convertir la réponse en blob, blob est un objet qui contient le fichier PDF
         const blob = await response.blob();
 
         // Créer un lien temporaire pour télécharger le CV
@@ -68,7 +68,7 @@ const downloadCV = async () => {
         document.body.appendChild(link);
         link.click();
 
-        // Nettoyer
+        // On supprime le lien temporaire
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
 
